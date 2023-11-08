@@ -5,6 +5,7 @@
 int	main(void)
 {
 	int filedesc = open("test.txt", O_RDONLY, S_IXUSR);
-	printf("%s", get_next_line(filedesc));
-
+	if (filedesc)
+		printf("%s", get_next_line(filedesc));
+	else printf("nope");
 }

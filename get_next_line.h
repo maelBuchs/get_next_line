@@ -16,11 +16,6 @@
 #include <stdlib.h>
 
 char *get_next_line(int fd);
-char 	*is_eol(char *str);
-char	*ft_strcat(char *dest, char *src);
-char	*ft_strjoin(char const *s1, char const *s2);
-char	*ft_strcat(char *dest, char *src);
-char	*read_buffer(int fd);
-size_t	ft_strlen(const char *s);
+
 
 # endif
