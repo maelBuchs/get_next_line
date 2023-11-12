@@ -13,7 +13,7 @@
 #include <stdio.h>
 
 
-//TO DO = clean stash, tester, clean everything
+//TO DO = manage last line, clean stash, tester, clean everything
 char *get_next_line(int fd)
 {
 	char *line;
