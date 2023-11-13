@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 #include "get_next_line.h"
 
-//TO DO = manage last line, clean stash, tester, clean everything
 char	*get_next_line(int fd)
 {
 	char		*line;
@@ -26,6 +25,8 @@ char	*get_next_line(int fd)
 	if (stash)
 		stash_to_line(stash, &line);
 	stash = clean_stash(stash);
+	if (!line)
+		return (NULL);
 	return (line);
 }
 

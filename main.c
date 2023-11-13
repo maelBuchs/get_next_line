@@ -8,14 +8,13 @@ int	main(void)
 	char	*line;
 	int		fd;
 
-	fd = 0;
+	fd = open("test.txt", O_RDONLY);
 	line = get_next_line(fd);
 	printf("%s", line);
 	free(line);
 	line = get_next_line(fd);
 	printf("%s", line);
 	free(line);
-	line = get_next_line(fd);
-	free(line);
+	close(fd);
 	return (0);
 }
