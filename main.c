@@ -2,14 +2,21 @@
 #include <stdio.h>
 # include <fcntl.h>
 
+
 int	main(void)
 {
-	int filedesc = open("test.txt", O_RDONLY, S_IXUSR);
-	
-	if (filedesc)
-	{
-		char * returned = get_next_line(filedesc);
-		printf("%s", returned);
-	}	
-	else printf("nope");
+	char	*line;
+	int		fd;
+
+	fd = open("test.txt", O_RDONLY);
+	line = get_next_line(fd);
+	printf("%s", line);
+	free(line);
+	line = get_next_line(fd);
+	printf("%s", line);
+	free(line);
+	line = get_next_line(fd);
+	free(line);
+	close(fd);
+	return (0);
 }

@@ -15,18 +15,19 @@
 # include <unistd.h>
 # include <stdlib.h>
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10
+#  define BUFFER_SIZE 1
 # endif
 
 char	 *get_next_line(int fd);
 void	read_buffer(int fd, char **stash);
-int	check_stash(char **stash, int returned);
+int		check_stash(char *stash, int returned);
 char 	*get_next_line(int fd);
 char	*ft_strcpy(char *dest, const char *src);
 int		ft_strlen(const char *s);
 char	*ft_strcat(char *dest, char *src);
 char	*ft_strjoin(char *s1, char *s2);
 char	*ft_strdup(const char *s);
-char	*stash_to_line(char *stash, char **line);
+void	stash_to_line(char *stash, char **line);
+char	*clean_stash(char *stash);
 
 #endif

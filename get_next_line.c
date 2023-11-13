@@ -19,17 +19,18 @@ char *get_next_line(int fd)
 	char *line;
 	static char	*stash;
 	line = NULL;
-	stash = ft_strdup("");
 	if (!BUFFER_SIZE)
-		return ("YEA BOIII");
+		return (NULL);
+	stash = ft_strdup("");
 	read_buffer(fd, &stash);
-	line = stash_to_line(stash, &line);
-	//clean stash;
+	if (stash)
+		stash_to_line(stash, &line);
+	stash = clean_stash(stash);
 	return (line);
 }
 
 
-char	*stash_to_line(char *stash, char **line)
+void	stash_to_line(char *stash, char **line)
 {
 	int	i;
 	int len;
@@ -37,7 +38,8 @@ char	*stash_to_line(char *stash, char **line)
 	len = 0;
 	while (stash[len] && stash[len] != '\n')
 		len++;
-	len++;
+	if (stash[len] == '\n')
+		len++;
 	(*line) = malloc(sizeof(char) * (len + 1));
 	i = 0;
 	while (i < len)
@@ -45,22 +47,22 @@ char	*stash_to_line(char *stash, char **line)
 		(*line)[i] = stash[i];
 		i++;
 	}
-	(*line)[i] = stash[i];
+	if (stash[len - 1] == '\n')
+		(*line)[i] = stash[i];
 	(*line)[len] = 0;
-	return ((*line));
 }
 
-int	check_stash(char **stash, int returned)
+int	check_stash(char *stash, int returned)
 {
 	int	i;
 
 	i = 0;
 	if(returned != BUFFER_SIZE)
 		return (1);
-	while ((*stash)[i])
+	while (stash[i])
 	{
 		i++;
-		if ((*stash)[i] == '\n' || (*stash)[i] == 0)
+		if (stash[i] == '\n' || stash[i] == 0)
 			return (1);
 	}
 	return (0);
@@ -72,11 +74,39 @@ void	read_buffer(int fd, char **stash)
 	char		*buffer;
 
 	returned = BUFFER_SIZE;
-	while (!check_stash(stash, returned))
+	while (!check_stash(*stash, returned))
 	{
 		buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 		buffer[BUFFER_SIZE] = 0;
 		returned = read(fd, buffer, BUFFER_SIZE);
-		(*stash) = ft_strjoin(*(stash), buffer);
+		(*stash) = ft_strjoin((*stash), buffer);
 	}
+}
+
+char	*clean_stash(char *stash)
+{
+	int	i;
+	int	j;
+	char *clean_stash;
+
+	i = 0;
+	j = 0;
+	while (stash[i] && stash[i] != '\n')
+		i++;
+	while (stash[j + i])
+		j++;
+	if (j == 0)
+	{
+		free(stash);
+		return(NULL);
+	}
+	clean_stash = malloc(sizeof(char) * j);
+	j = 0;
+	while (stash[i + j])
+	{
+		clean_stash[j] = stash[j + i];
+		j++;
+	}
+	free(stash);
+	return (clean_stash);
 }
