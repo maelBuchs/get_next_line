@@ -12,10 +12,6 @@
 
 #include "get_next_line.h"
 
-void	*ft_calloc(size_t nmemb, size_t size);
-void	ft_bzero(void *s, size_t n);
-void	*ft_memset(void *s, int c, size_t n);
-
 char	*ft_strcpy(char *dest, const char *src)
 {
 	int	i;
@@ -63,12 +59,16 @@ char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*array;
 	int		lenght;
+	int		i;
 
+	i = -1;
 	array = NULL;
 	if (!s1 || !s2)
 		return (NULL);
 	lenght = (ft_strlen((char *)s1)) + (ft_strlen((char *)s2) + 1);
-	array = ft_calloc(lenght, sizeof(char));
+	array = malloc(lenght * sizeof(char));
+	while (i++ < lenght)
+		array[i] = 0;
 	if (array == NULL)
 		return (NULL);
 	array[lenght] = 0;
@@ -88,42 +88,4 @@ char	*ft_strdup(const char *s)
 		return (tab);
 	ft_strcpy(tab, s);
 	return (tab);
-}
-
-void	*ft_calloc(size_t nmemb, size_t size)
-{
-	void	*tab;
-
-	if ((long long)size == 0 || (long long)nmemb == 0)
-		return (malloc(1));
-	if ((long long)size < 0 || (long long)nmemb < 0)
-		return (NULL);
-	tab = malloc(nmemb * size);
-	if (!tab)
-		return (NULL);
-	ft_bzero(tab, nmemb * size);
-	return (tab);
-}
-
-void	ft_bzero(void *s, size_t n)
-{
-	ft_memset (s, '\0', n);
-}
-
-void	*ft_memset(void *s, int c, size_t n)
-{
-	size_t			i;
-	unsigned char	*pos;
-
-	if (!s)
-		return (NULL);
-	pos = (unsigned char *)s;
-	i = 0;
-	while (i < n)
-	{
-		(*pos) = c;
-		pos++;
-		i++;
-	}
-	return (s);
 }

@@ -12,12 +12,12 @@
 #include "get_next_line.h"
 #include <stdio.h>
 
-
 //TO DO = manage last line, clean stash, tester, clean everything
-char *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-	char *line;
+	char		*line;
 	static char	*stash;
+
 	line = NULL;
 	if (!BUFFER_SIZE)
 		return (NULL);
@@ -30,11 +30,10 @@ char *get_next_line(int fd)
 	return (line);
 }
 
-
 void	stash_to_line(char *stash, char **line)
 {
 	int	i;
-	int len;
+	int	len;
 
 	len = 0;
 	while (stash[len] && stash[len] != '\n')
@@ -71,8 +70,8 @@ int	check_stash(char *stash, int returned)
 
 void	read_buffer(int fd, char **stash)
 {
-	int 		returned;
-	char		*buffer;
+	int		returned;
+	char	*buffer;
 
 	returned = BUFFER_SIZE;
 	while (!check_stash(*stash, returned))
@@ -86,9 +85,9 @@ void	read_buffer(int fd, char **stash)
 
 char	*clean_stash(char *stash)
 {
-	int	i;
-	int	j;
-	char *clean_stash;
+	int		i;
+	int		j;
+	char	*clean_stash;
 
 	i = 0;
 	j = 0;
@@ -105,13 +104,9 @@ char	*clean_stash(char *stash)
 	}
 	clean_stash = malloc(sizeof(char) * (j + 1));
 	clean_stash[j] = '\0';
-	j = 0;
-	while (stash[i + j])
-	{
+	j = -1;
+	while (stash[i + j++])
 		clean_stash[j] = stash[j + i];
-		j++;
-	}
 	free(stash);
 	return (clean_stash);
 }
-
