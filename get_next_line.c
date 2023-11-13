@@ -19,7 +19,7 @@ char	*get_next_line(int fd)
 	static char	*stash;
 
 	line = NULL;
-	if (!BUFFER_SIZE)
+	if (!BUFFER_SIZE || !fd)
 		return (NULL);
 	if (!stash)
 		stash = ft_strdup("");
