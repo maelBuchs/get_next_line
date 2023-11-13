@@ -82,6 +82,8 @@ void	read_buffer(int fd, char **stash)
 			buffer[returned] = 0;
 			(*stash) = ft_strjoin((*stash), buffer);
 		}
+		else
+			free (buffer);
 	}
 }
 
