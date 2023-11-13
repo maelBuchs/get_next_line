@@ -16,7 +16,7 @@ char	*get_next_line(int fd)
 	char		*line;
 	static char	*stash;
 
-	if (!BUFFER_SIZE || fd < 0)
+	if ( BUFFER_SIZE <= 0 || fd < 0 || fd >= 1023)
 		return (NULL);
 	line = NULL;
 	if (!stash)
