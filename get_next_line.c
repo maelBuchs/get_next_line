@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
-#include <stdio.h>
 
 //TO DO = manage last line, clean stash, tester, clean everything
 char	*get_next_line(int fd)
@@ -18,9 +17,9 @@ char	*get_next_line(int fd)
 	char		*line;
 	static char	*stash;
 
-	line = NULL;
-	if (!BUFFER_SIZE || !fd)
+	if (!BUFFER_SIZE || !fd || fd <= 0)
 		return (NULL);
+	line = NULL;
 	if (!stash)
 		stash = ft_strdup("");
 	read_buffer(fd, &stash);
@@ -78,8 +77,11 @@ void	read_buffer(int fd, char **stash)
 	{
 		buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 		returned = read(fd, buffer, BUFFER_SIZE);
-		buffer[returned] = 0;
-		(*stash) = ft_strjoin((*stash), buffer);
+		if (returned > 0)
+		{
+			buffer[returned] = 0;
+			(*stash) = ft_strjoin((*stash), buffer);
+		}
 	}
 }
 
