@@ -47,7 +47,7 @@ void	stash_to_line(char *stash, char **line)
 		(*line)[i] = stash[i];
 		i++;
 	}
-	if (stash[len - 1] == '\n')
+	if (stash[len] == '\n')
 		(*line)[i] = stash[i];
 	(*line)[len] = 0;
 }
@@ -59,11 +59,11 @@ int	check_stash(char *stash, int returned)
 	i = 0;
 	if (returned != BUFFER_SIZE)
 		return (1);
-	while (stash[i] || stash[i + 1])
+	while (stash[i])
 	{
-		i++;
 		if (stash[i] == '\n' || stash[i] == 0)
 			return (1);
+		i++;
 	}
 	return (0);
 }

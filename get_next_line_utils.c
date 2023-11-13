@@ -67,11 +67,11 @@ char	*ft_strjoin(char *s1, char *s2)
 		return (NULL);
 	lenght = (ft_strlen((char *)s1)) + (ft_strlen((char *)s2) + 1);
 	array = malloc(lenght * sizeof(char));
-	while (i++ < lenght)
+	while (i++ < lenght - 1)
 		array[i] = 0;
 	if (array == NULL)
 		return (NULL);
-	array[lenght] = 0;
+	array[lenght - 1] = 0;
 	ft_strcat(array, (char *)s1);
 	free(s1);
 	ft_strcat(array, (char *)s2);
