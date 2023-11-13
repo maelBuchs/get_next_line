@@ -21,7 +21,8 @@ char *get_next_line(int fd)
 	line = NULL;
 	if (!BUFFER_SIZE)
 		return (NULL);
-	stash = ft_strdup("");
+	if (!stash)
+		stash = ft_strdup("");
 	read_buffer(fd, &stash);
 	if (stash)
 		stash_to_line(stash, &line);
@@ -57,9 +58,9 @@ int	check_stash(char *stash, int returned)
 	int	i;
 
 	i = 0;
-	if(returned != BUFFER_SIZE)
+	if (returned != BUFFER_SIZE)
 		return (1);
-	while (stash[i])
+	while (stash[i + 1])
 	{
 		i++;
 		if (stash[i] == '\n' || stash[i] == 0)
@@ -77,8 +78,8 @@ void	read_buffer(int fd, char **stash)
 	while (!check_stash(*stash, returned))
 	{
 		buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-		buffer[BUFFER_SIZE] = 0;
 		returned = read(fd, buffer, BUFFER_SIZE);
+		buffer[returned] = 0;
 		(*stash) = ft_strjoin((*stash), buffer);
 	}
 }
@@ -93,14 +94,17 @@ char	*clean_stash(char *stash)
 	j = 0;
 	while (stash[i] && stash[i] != '\n')
 		i++;
+	if (stash[i] == '\n')
+		i++;
 	while (stash[j + i])
 		j++;
 	if (j == 0)
 	{
 		free(stash);
-		return(NULL);
+		return (NULL);
 	}
-	clean_stash = malloc(sizeof(char) * j);
+	clean_stash = malloc(sizeof(char) * (j + 1));
+	clean_stash[j] = '\0';
 	j = 0;
 	while (stash[i + j])
 	{
@@ -110,3 +114,4 @@ char	*clean_stash(char *stash)
 	free(stash);
 	return (clean_stash);
 }
+
