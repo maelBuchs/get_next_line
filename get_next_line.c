@@ -17,7 +17,7 @@ char	*get_next_line(int fd)
 	static char	*stash;
 
 	if ( BUFFER_SIZE <= 0 || fd < 0 || fd >= 1023)
-		return (NULL);
+		return (line = NULL);
 	line = NULL;
 	if (!stash)
 		stash = ft_strdup("");
@@ -26,7 +26,7 @@ char	*get_next_line(int fd)
 		stash_to_line(stash, &line);
 	stash = clean_stash(stash);
 	if (!line)
-		return (NULL);
+		return (line = NULL);
 	return (line);
 }
 
