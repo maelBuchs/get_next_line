@@ -59,7 +59,7 @@ int	check_stash(char *stash, int returned)
 	i = 0;
 	if (returned != BUFFER_SIZE)
 		return (1);
-	while (stash[i + 1])
+	while (stash[i] || stash[i + 1])
 	{
 		i++;
 		if (stash[i] == '\n' || stash[i] == 0)
