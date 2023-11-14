@@ -16,8 +16,8 @@ char	*get_next_line(int fd)
 	char		*line;
 	static char	*stash;
 
-	if ( BUFFER_SIZE <= 0 || fd < 0 || fd >= 1023)
-		return (line = NULL);
+	if (BUFFER_SIZE <= 0 || fd < 0 || fd >= 256)
+		return (NULL);
 	line = NULL;
 	if (!stash)
 		stash = ft_strdup("");
@@ -26,7 +26,7 @@ char	*get_next_line(int fd)
 		stash_to_line(stash, &line);
 	stash = clean_stash(stash);
 	if (!line)
-		return (line = NULL);
+		return (NULL);
 	return (line);
 }
 
@@ -36,6 +36,8 @@ void	stash_to_line(char *stash, char **line)
 	int	len;
 
 	len = 0;
+	if (!ft_strlen(stash))
+		return ;
 	while (stash[len] && stash[len] != '\n')
 		len++;
 	if (stash[len] == '\n')
@@ -51,7 +53,7 @@ void	stash_to_line(char *stash, char **line)
 		(*line)[i] = stash[i];
 	(*line)[len] = 0;
 }
-
+ 
 int	check_stash(char *stash, int returned)
 {
 	int	i;
